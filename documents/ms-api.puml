@@ -1,0 +1,27 @@
+@startuml
+title "Microservice - Consumer"
+actor "Client" as client
+participant       "microservice-service"       as ms
+alt consulta de dados valor total
+database    "btg-database"    as db
+client -> ms : url: /pedidos/valor/codigo do cliente
+ms -> db
+ms -> client : Response: 200 ok
+note right client: se nao encontrado o cliente\n 404 not found
+end
+alt consulta quantidade de pedidos por cliente
+database    "btg-database"    as db
+client -> ms : url: /pedidos/quantidade/codigo do cliente
+ms -> db
+ms -> client : Response: 200 ok
+note right client: se nao encontrado o cliente\n 404 not found
+end
+alt consulta lsta de pedidos realizados por cliente
+database    "btg-database"    as db
+client -> ms : url: /pedidos/quantidade/codigo do cliente
+ms -> db
+ms -> client : Response: 200 ok
+note right client: se nao encontrado o cliente\n 404 not found\n Lista vazia \n 204 no content
+end
+@enduml
+

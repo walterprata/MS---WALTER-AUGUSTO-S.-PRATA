@@ -1,0 +1,10 @@
+@startuml
+title "Microservice - Consumer"
+queue "pedidos-queue" as queue
+participant       "microservice-service"       as ms
+database    "btg-database"    as db
+queue <- ms : read json
+note left queue: exemplo do json\n dentro de documents
+ms -> db : record data
+@enduml
+
