@@ -1,6 +1,7 @@
 package com.microservice.service;
 
 import com.microservice.exceptions.ObjectNotFoundException;
+import com.microservice.model.Cliente;
 import com.microservice.model.Pedido;
 import com.microservice.repository.ClienteRepository;
 import com.microservice.repository.ItensRepository;
@@ -27,12 +28,22 @@ public class PedidoService {
     @Autowired
     private ItensRepository itensRepository;
 
+
     public Pedido buscarPedido(Long id) throws ObjectNotFoundException {
         Pedido pedido = pedidoRepository.findByCodigoPedido(id);
         if (isNull(pedido)) {
             throw new ObjectNotFoundException("Pedido não encontrado! : " + id);
         }
         return pedido;
+    }
+
+    public Long consultarQuantidadePedidoPorCliente(Long id) throws ObjectNotFoundException {
+        Cliente cliente = clienteRepository.findByCodigoCliente(id);
+        if (isNull(cliente)) {
+            throw new ObjectNotFoundException("Cliente não encontrado! : " + id);
+        }
+
+        return pedidoRepository.countByClienteCodigoCliente(id);
     }
 
     @Transactional

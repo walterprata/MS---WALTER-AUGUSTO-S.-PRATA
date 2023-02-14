@@ -29,7 +29,18 @@ public class PedidoController {
         } catch (ObjectNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Pedido não encontrado: " + id);
         }
-
-
     }
+
+    @GetMapping("/quantidade/{id}")
+    public ResponseEntity<String> consultarPedidosPorCliente(@PathVariable("id") Long id) {
+        try {
+            Long qtdPedido = pedidoService.consultarQuantidadePedidoPorCliente(id);
+
+            return ResponseEntity.ok("Quantidade de pedidos realizados: " + qtdPedido);
+        } catch (ObjectNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Cliente não encontrado: " + id);
+        }
+    }
+
+
 }
