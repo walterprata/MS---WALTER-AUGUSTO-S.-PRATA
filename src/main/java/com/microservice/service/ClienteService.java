@@ -12,6 +12,10 @@ public class ClienteService {
     @Autowired
     private ClienteRepository clienteRepository;
 
+    public Cliente consultarCliente(Long id) {
+        return clienteRepository.findByCodigoCliente(id);
+    }
+
     @Transactional
     public void salvarCliente(Cliente cliente) {
         clienteRepository.save(cliente);

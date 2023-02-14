@@ -3,8 +3,6 @@ package com.microservice.service;
 import com.microservice.exceptions.ObjectNotFoundException;
 import com.microservice.model.Cliente;
 import com.microservice.model.Pedido;
-import com.microservice.repository.ClienteRepository;
-import com.microservice.repository.ItensRepository;
 import com.microservice.repository.PedidoRepository;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -20,14 +18,14 @@ public class PedidoService {
 
     private Logger logger = LogManager.getLogger(PedidoService.class);
 
-    @Autowired
-    private ClienteRepository clienteRepository;
-    @Autowired
+    private ClienteService clienteService;
     private PedidoRepository pedidoRepository;
 
     @Autowired
-    private ItensRepository itensRepository;
-
+    public PedidoService(ClienteService clienteService, PedidoRepository pedidoRepository) {
+        this.clienteService = clienteService;
+        this.pedidoRepository = pedidoRepository;
+    }
 
     public Pedido buscarPedido(Long id) throws ObjectNotFoundException {
         Pedido pedido = pedidoRepository.findByCodigoPedido(id);
@@ -38,7 +36,7 @@ public class PedidoService {
     }
 
     public Long consultarQuantidadePedidoPorCliente(Long id) throws ObjectNotFoundException {
-        Cliente cliente = clienteRepository.findByCodigoCliente(id);
+        Cliente cliente = clienteService.consultarCliente(id);
         if (isNull(cliente)) {
             throw new ObjectNotFoundException("Cliente não encontrado! : " + id);
         }

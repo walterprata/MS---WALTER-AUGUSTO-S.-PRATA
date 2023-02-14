@@ -19,14 +19,15 @@ public class ProcessorService {
     private final ClienteService clienteService;
     private final ItensService itensService;
     private final PedidoService pedidoService;
+
     @Autowired
-    public ProcessorService(ClienteService clienteService, ItensService itensService, PedidoService pedidoService){
+    public ProcessorService(ClienteService clienteService, ItensService itensService, PedidoService pedidoService) {
         this.clienteService = clienteService;
         this.itensService = itensService;
         this.pedidoService = pedidoService;
     }
 
-    public Pedido convertAndSave(PedidoDto pedidoDto){
+    public Pedido convertAndSave(PedidoDto pedidoDto) {
         List<Itens> itensList = new ArrayList<>();
         Cliente cliente = new Cliente();
         cliente.setCodigoCliente(pedidoDto.getCodigoCliente());
@@ -37,7 +38,7 @@ public class ProcessorService {
         pedido.setCodigoPedido(pedidoDto.getCodigoPedido());
         pedido.setCliente(cliente);
 
-        for(ItensDto itensDto : pedidoDto.getItens()){
+        for (ItensDto itensDto : pedidoDto.getItens()) {
             Itens itens = new Itens();
             itens.setProduto(itensDto.getProduto());
             itens.setPreco(itensDto.getPreco());
