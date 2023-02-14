@@ -1,9 +1,6 @@
 package com.microservice.service;
 
-import com.microservice.dto.ItensDto;
-import com.microservice.dto.PedidoDto;
-import com.microservice.model.Cliente;
-import com.microservice.model.Itens;
+import com.microservice.exceptions.ObjectNotFoundException;
 import com.microservice.model.Pedido;
 import com.microservice.repository.ClienteRepository;
 import com.microservice.repository.ItensRepository;
@@ -14,10 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.List;
 
-import static com.microservice.utils.UtilsMicroservice.somarPreco;
+import static java.util.Objects.isNull;
 
 @Service
 public class PedidoService {
@@ -32,9 +27,18 @@ public class PedidoService {
     @Autowired
     private ItensRepository itensRepository;
 
+    public Pedido buscarPedido(Long id) throws ObjectNotFoundException {
+        Pedido pedido = pedidoRepository.findByCodigoPedido(id);
+        if (isNull(pedido)) {
+            throw new ObjectNotFoundException("Pedido não encontrado! : " + id);
+        }
+        return pedido;
+    }
+
     @Transactional
     public void salvarPedido(Pedido pedido) {
         pedidoRepository.save(pedido);
     }
+
 
 }
