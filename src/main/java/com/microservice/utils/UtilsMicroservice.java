@@ -1,5 +1,6 @@
 package com.microservice.utils;
 
+import com.microservice.dto.ItensDto;
 import com.microservice.model.Itens;
 
 import java.math.BigDecimal;
@@ -9,4 +10,5 @@ public abstract class UtilsMicroservice {
     public static BigDecimal somarPreco(List<Itens> itens) {
         return itens.stream().map(Itens::getPreco).reduce(BigDecimal.ZERO, BigDecimal::add);
     }
+
 }

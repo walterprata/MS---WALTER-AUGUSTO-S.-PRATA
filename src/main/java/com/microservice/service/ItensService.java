@@ -32,8 +32,7 @@ public class ItensService {
         }
 
         List<Itens> itensList = itensRepository.findAllByClienteCodigoCliente(id);
-        List<ItensDto> itensDtoList = itensList.stream().map(this::fromDTO).collect(Collectors.toList());
-        return itensDtoList;
+        return itensList.stream().map(this::fromDTO).collect(Collectors.toList());
     }
 
     @Transactional
